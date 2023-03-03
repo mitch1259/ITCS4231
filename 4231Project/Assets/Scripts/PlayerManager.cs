@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public Transform playerTransform;
+    public Transform cameraTransform;
     private float speed;
     private float speedIncrease;
     private float ground;
@@ -20,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         speed = 5f;
-        speedIncrease = 0.01f;
+        speedIncrease = 0.02f;
         ground = 1.25f;
         jump = 15f;
         fall = .025f;
@@ -49,6 +50,7 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && jumping == false) {
             gravity = 0f;
             jumping = true;
+            safe = false;
         }
 
         if (jumping) {
@@ -68,12 +70,14 @@ public class PlayerManager : MonoBehaviour
 
         if (playerTransform.position.y < ground) {
             dead = true;
+            //Debug.Log("Player died");
         }
     }
 
     void FixedUpdate()
     {
-        //playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
+        playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
+        cameraTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
 
         passedTime += 1;
         if (passedTime >= 300) {
@@ -85,28 +89,27 @@ public class PlayerManager : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Safe Ground (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
-            Debug.Log("Landed on Solid Ground");
+        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "SafeGround (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
+            Debug.Log("Landed on Solid Ground" + c.gameObject.GetComponent<MeshRenderer>().material.name);
             safe = true;
             falling = false;
         } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Death (Instance)") {
-            Debug.Log("Hit an obstacle - player is now dead");
+            Debug.Log("Hit an obstacle");
             dead = true;
         }
     }
 
     void OnCollisionStay(Collision c)
     {
-        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Safe Ground (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
-            safe = false;
+        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "SafeGround (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
+            falling = false;
         }
     }
 
     void OnCollisionExit(Collision c)
     {
-        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Safe Ground (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
+        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "SafeGround (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
             Debug.Log("Left Solid Ground");
-            safe = false;
             falling = true;
         }
     }
