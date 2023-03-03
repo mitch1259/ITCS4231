@@ -81,7 +81,8 @@ public class PlayerManager : MonoBehaviour
     void FixedUpdate()
     {
         playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
-        cameraTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
+        cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
+        cameraTransform.rotation = Quaternion.Euler(15f, 0f, 0f);
 
         passedTime += 1;
         if (passedTime >= 600) {
