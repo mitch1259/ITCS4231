@@ -17,20 +17,22 @@ public class PlayerManager : MonoBehaviour
     private bool safe;
     private bool dead;
     private bool falling;
+    private bool win;
 
     void Start()
     {
         speed = 5f;
-        speedIncrease = 0.02f;
+        speedIncrease = 0.05f;
         ground = 1.25f;
-        jump = 15f;
-        fall = .025f;
-        gravity = 0f;
+        jump = 10f;
+        fall = .035f;
+        gravity = -0.01f;
         jumping = false;
         passedTime = 0;
         safe = false;
         dead = false;
         falling = false;
+        win = false;
 
         playerTransform.position = new Vector3(0f, ground, 0f);
     }
@@ -48,7 +50,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.W) && jumping == false) {
-            gravity = 0f;
+            gravity = -0.01f;
             jumping = true;
             safe = false;
         }
@@ -62,6 +64,8 @@ public class PlayerManager : MonoBehaviour
                 playerTransform.position = new Vector3(playerTransform.position.x, ground, playerTransform.position.z);
             }
         }
+
+        //Debug.Log(Time.deltaTime);
 
         if (falling && !jumping) {
             gravity -= fall * Time.deltaTime;
@@ -80,9 +84,9 @@ public class PlayerManager : MonoBehaviour
         cameraTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
 
         passedTime += 1;
-        if (passedTime >= 300) {
+        if (passedTime >= 600) {
             passedTime = 0;
-            speedIncrease += 0.005f;
+            speedIncrease += 0.001f;
             Debug.Log("Speed Increased");
         }
     }
@@ -96,6 +100,9 @@ public class PlayerManager : MonoBehaviour
         } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Death (Instance)") {
             Debug.Log("Hit an obstacle");
             dead = true;
+        } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Breakout (Instance)") {
+            win = true;
+            Debug.Log("Player wins!");
         }
     }
 
