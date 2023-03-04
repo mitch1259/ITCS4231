@@ -72,9 +72,12 @@ public class PlayerManager : MonoBehaviour
             playerTransform.position += new Vector3(0f, gravity, 0f);
         }
 
-        if (playerTransform.position.y < ground) {
+        if (playerTransform.position.y < ground - 1) {
             dead = true;
-            //Debug.Log("Player died");
+        }
+
+        if (dead) {
+            UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 
@@ -95,7 +98,7 @@ public class PlayerManager : MonoBehaviour
     void OnCollisionEnter(Collision c)
     {
         if (c.gameObject.GetComponent<MeshRenderer>().material.name == "SafeGround (Instance)" || c.gameObject.GetComponent<MeshRenderer>().material.name == "Start (Instance)") {
-            Debug.Log("Landed on Solid Ground" + c.gameObject.GetComponent<MeshRenderer>().material.name);
+            Debug.Log("Landed on Solid Ground");
             safe = true;
             falling = false;
         } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Death (Instance)") {
