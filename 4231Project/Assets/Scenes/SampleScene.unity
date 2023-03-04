@@ -236,6 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 857909342}
   cameraTransform: {fileID: 963194228}
+  instance: {fileID: 1760702080}
 --- !u!4 &857909342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6016450053634318639, guid: 9ebd9e6f21c6e420ca58666735f84da4, type: 3}
@@ -553,11 +554,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1d8ee838cbd4fe582dcce1f708746b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   worldBlock: []
   done: 0
   spawn: 0
   exits: 0
+  block: 0
 --- !u!4 &1760702081
 Transform:
   m_ObjectHideFlags: 0

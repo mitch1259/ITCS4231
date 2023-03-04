@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     public Transform playerTransform;
     public Transform cameraTransform;
+    public GameManager instance;
     private float speed;
     private float speedIncrease;
     private float ground;
@@ -57,7 +58,7 @@ public class PlayerManager : MonoBehaviour
 
         if (jumping) {
             gravity -= fall * Time.deltaTime;
-            playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime, 0f);
+            playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime * 2.5f, 0f);
 
             if (safe) {
                 jumping = false;
@@ -107,6 +108,19 @@ public class PlayerManager : MonoBehaviour
         } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Breakout (Instance)") {
             win = true;
             Debug.Log("Player wins!");
+        }
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.GetComponent<MeshRenderer>().material.name == "NewSpawn (Instance)") {
+            if (instance.worldBlock[(int)instance.world[instance.block]].name == "Exit") {
+                Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn - 16.5f), Quaternion.identity);
+            } else {
+                Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn), Quaternion.identity);
+                instance.spawn += 36f;
+            }
+            instance.block++;
         }
     }
 
