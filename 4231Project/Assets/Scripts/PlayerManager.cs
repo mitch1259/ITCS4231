@@ -73,7 +73,7 @@ public class PlayerManager : MonoBehaviour
             playerTransform.position += new Vector3(0f, gravity, 0f);
         }
 
-        if (playerTransform.position.y < ground - 1) {
+        if (playerTransform.position.y < ground - 0.5f) {
             dead = true;
         }
 
