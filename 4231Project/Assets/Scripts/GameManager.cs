@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject[] worldBlock;
+    public GameObject[] start;
     public bool done;
     public float spawn;
     public int exits;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             worldBlock = Resources.LoadAll<GameObject>("WorldBlocks");
+            start = Resources.LoadAll<GameObject>("Start");
             done = false;
             spawn = 55.5f;
             exits = 0;

@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     public Transform playerTransform;
     public Transform cameraTransform;
     public GameManager instance;
+    public List<GameObject> spawns;
     private float speed;
     private float speedIncrease;
     private float ground;
@@ -34,6 +35,9 @@ public class PlayerManager : MonoBehaviour
         dead = false;
         falling = false;
         win = false;
+
+        spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
+        spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
         playerTransform.position = new Vector3(0f, ground, 0f);
     }
@@ -115,12 +119,14 @@ public class PlayerManager : MonoBehaviour
     {
         if (c.gameObject.GetComponent<MeshRenderer>().material.name == "NewSpawn (Instance)") {
             if (instance.worldBlock[(int)instance.world[instance.block]].name == "Exit") {
-                Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn - 16.5f), Quaternion.identity);
+                spawns.Add(Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn - 16.5f), Quaternion.identity));
             } else {
-                Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn), Quaternion.identity);
+                spawns.Add(Instantiate(instance.worldBlock[(int)instance.world[instance.block]], new Vector3(0, 0, instance.spawn), Quaternion.identity));
                 instance.spawn += 36f;
             }
             instance.block++;
+            //Debug.Log(spawns[spawns.Count - 1].name);
+            Destroy(spawns[spawns.Count - 3]);
         }
     }
 
