@@ -33,13 +33,13 @@ public class PlayerManager : MonoBehaviour
         passedTime = 0;
         safe = false;
         dead = false;
-        falling = false;
+        falling = true;
         win = false;
 
         spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
         spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
-        playerTransform.position = new Vector3(0f, ground, 0f);
+        playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
     }
 
     void Update()
