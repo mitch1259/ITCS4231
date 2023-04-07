@@ -13,12 +13,7 @@ public class WorldManager : MonoBehaviour
     public int block;
     public int threshold;
 
-    void Awake()
-    {
-        UniqueName();
-    }
-
-    void UniqueName() {
+    public void GenerateWorld() {
         worldBlock = Resources.LoadAll<GameObject>("WorldBlocks");
         start = Resources.LoadAll<GameObject>("Start");
         done = false;

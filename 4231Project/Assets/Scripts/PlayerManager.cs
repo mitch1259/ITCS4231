@@ -22,20 +22,14 @@ public class PlayerManager : MonoBehaviour
     private bool win;
     private bool playing;
 
-    void Start()
-    {
-        UniqueName();
-        Init();
-    }
-
-    void Init() {
+    public void Init() {
         spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
         spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
         playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
     }
 
-    void UniqueName() {
+    public void ResetPlayer() {
         speed = 5f;
         speedIncrease = 0.05f;
         ground = 1.25f;

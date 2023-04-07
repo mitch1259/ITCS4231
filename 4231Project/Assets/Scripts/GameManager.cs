@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     public WorldManager world;
     public PlayerManager player;
 
+    void Awake() {
+        world.GenerateWorld();
+        player.ResetPlayer();
+        player.Init();
+    }
+
     void Update() {
         if (player.getDead() || player.getWin()) {
             UnityEditor.EditorApplication.isPlaying = false;
