@@ -123,6 +123,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &383051895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383051897}
+  - component: {fileID: 383051896}
+  m_Layer: 0
+  m_Name: World Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383051896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383051895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e2d8e9d4c9b464fb965c03e9d8a249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldBlock: []
+  start: []
+  done: 0
+  spawn: 0
+  exits: 0
+  block: 0
+--- !u!4 &383051897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383051895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.351383, y: -8.660046, z: 7.0055103}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 857909342}
   cameraTransform: {fileID: 963194228}
-  instance: {fileID: 1760702080}
+  instance: {fileID: 383051896}
   spawns: []
 --- !u!4 &857909342 stripped
 Transform:
@@ -350,6 +400,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6016450053634318625, guid: 9ebd9e6f21c6e420ca58666735f84da4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6016450053634318627, guid: 9ebd9e6f21c6e420ca58666735f84da4, type: 3}
       propertyPath: m_Name
       value: Player
@@ -441,12 +495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1d8ee838cbd4fe582dcce1f708746b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldBlock: []
-  start: []
-  done: 0
-  spawn: 0
-  exits: 0
-  block: 0
+  world: {fileID: 383051896}
+  player: {fileID: 857909338}
 --- !u!4 &1760702081
 Transform:
   m_ObjectHideFlags: 0

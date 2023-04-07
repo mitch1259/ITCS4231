@@ -6,7 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     public Transform playerTransform;
     public Transform cameraTransform;
-    public GameManager instance;
+    public WorldManager instance;
     public List<GameObject> spawns;
     private float speed;
     private float speedIncrease;
@@ -20,9 +20,22 @@ public class PlayerManager : MonoBehaviour
     private bool dead;
     private bool falling;
     private bool win;
+    private bool playing;
 
     void Start()
     {
+        UniqueName();
+        Init();
+    }
+
+    void Init() {
+        spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
+        spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
+
+        playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
+    }
+
+    void UniqueName() {
         speed = 5f;
         speedIncrease = 0.05f;
         ground = 1.25f;
@@ -35,15 +48,21 @@ public class PlayerManager : MonoBehaviour
         dead = false;
         falling = true;
         win = false;
+        spawns.Clear();
+        playing = true;
+    }
 
-        spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
-        spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
+    public bool getWin() {
+        return win;
+    }
 
-        playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
+    public bool getDead() {
+        return dead;
     }
 
     void Update()
     {
+    if (playing) {
         Vector3 movement = Vector3.zero;
         float x = playerTransform.position.x;
         x = Mathf.Clamp(x, -3.25f, 3.25f);
@@ -80,14 +99,12 @@ public class PlayerManager : MonoBehaviour
         if (playerTransform.position.y < ground - 0.5f) {
             dead = true;
         }
-
-        if (dead) {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
+    }
     }
 
     void FixedUpdate()
     {
+    if (playing) {
         playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
         cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
         cameraTransform.rotation = Quaternion.Euler(15f, 0f, 0f);
@@ -98,6 +115,7 @@ public class PlayerManager : MonoBehaviour
             speedIncrease += 0.001f;
             Debug.Log("Speed Increased");
         }
+    }
     }
 
     void OnCollisionEnter(Collision c)
