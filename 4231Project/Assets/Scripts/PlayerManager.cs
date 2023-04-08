@@ -22,10 +22,11 @@ public class PlayerManager : MonoBehaviour
     private bool falling;
     private bool win;
     private bool playing;
+    public int score;
 
     public void Init() {
         spawns.Add(Instantiate(gameManager.start[1], new Vector3(0, 0, 0), Quaternion.identity));
-        //spawns.Add(Instantiate(gameManager.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
+        spawns.Add(Instantiate(gameManager.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
         playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
         cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
@@ -46,6 +47,7 @@ public class PlayerManager : MonoBehaviour
         dead = false;
         falling = true;
         win = false;
+        score = 0;
 
         foreach(var spawn in spawns) {
             Destroy(spawn);
@@ -127,6 +129,7 @@ public class PlayerManager : MonoBehaviour
         if (passedTime >= 600) {
             passedTime = 0;
             speedIncrease += 0.001f;
+            score += 5;
             Debug.Log("Speed Increased");
         }
     }

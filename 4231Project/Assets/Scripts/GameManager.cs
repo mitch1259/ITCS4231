@@ -6,21 +6,22 @@ public class GameManager : MonoBehaviour
 {
     public WorldManager world;
     public PlayerManager player;
-    public ButtonManager startButton;
+    public ButtonManager UI;
     public GameObject[] start;
     public int difficulty;
     public int oldDifficulty;
+    public int score;
 
     void Awake() {
         start = Resources.LoadAll<GameObject>("Start");
         difficulty = 0;
         oldDifficulty = -1;
+        score = -1;
 
         InitGame();
     }
 
     void InitGame() {
-        world.GenerateWorld();
         player.ResetPlayer();
         player.Init();
     }
@@ -30,22 +31,27 @@ public class GameManager : MonoBehaviour
             player.setDead(false);
             player.setWin(false);
             player.setPlay(false);
-            startButton.StartButton.gameObject.SetActive(true);
+            UI.StartButton.gameObject.SetActive(true);
+            UI.Difficulty.gameObject.SetActive(true);
+            score = player.score;
+            Debug.Log("Score: " + score);
             InitGame();
         }
 
-        //difficulty = slider.value or something like that
+        difficulty = UI.diff;
         if (difficulty != oldDifficulty) {
-            Debug.Log("Difficulty Updated");
-
+            world.threshold = difficulty*4;
             oldDifficulty = difficulty;
+
+            Debug.Log("Difficulty Updated: " + world.threshold);
         }
 
-        if (startButton.startGame == true) {
-            player.spawns.Add(Instantiate(start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
+        if (UI.startGame == true) {
+            world.GenerateWorld();
             player.setPlay(true);
-            startButton.startGame = false;
-            startButton.StartButton.gameObject.SetActive(false);
+            UI.startGame = false;
+            UI.StartButton.gameObject.SetActive(false);
+            UI.Difficulty.gameObject.SetActive(false);
         }
     }
 }
