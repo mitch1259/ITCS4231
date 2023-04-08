@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     public Transform playerTransform;
     public Transform cameraTransform;
     public WorldManager instance;
+    public GameManager gameManager;
     public List<GameObject> spawns;
     private float speed;
     private float speedIncrease;
@@ -23,10 +24,13 @@ public class PlayerManager : MonoBehaviour
     private bool playing;
 
     public void Init() {
-        spawns.Add(Instantiate(instance.start[1], new Vector3(0, 0, 0), Quaternion.identity));
-        spawns.Add(Instantiate(instance.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
+        spawns.Add(Instantiate(gameManager.start[1], new Vector3(0, 0, 0), Quaternion.identity));
+        //spawns.Add(Instantiate(gameManager.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
         playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
+        cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
+        cameraTransform.rotation = Quaternion.Euler(15f, 0f, 0f);
+        Debug.Log("Player reInit");
     }
 
     public void ResetPlayer() {
@@ -42,16 +46,32 @@ public class PlayerManager : MonoBehaviour
         dead = false;
         falling = true;
         win = false;
+
+        foreach(var spawn in spawns) {
+            Destroy(spawn);
+        }
         spawns.Clear();
-        playing = true;
+        Debug.Log("Player reset");
     }
 
     public bool getWin() {
         return win;
     }
 
+    public void setWin(bool value) {
+        win = value;
+    }
+
+    public void setDead(bool value) {
+        dead = value;
+    }
+
     public bool getDead() {
         return dead;
+    }
+
+    public void setPlay(bool value) {
+        playing = value;
     }
 
     void Update()

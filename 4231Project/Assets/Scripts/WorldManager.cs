@@ -15,7 +15,6 @@ public class WorldManager : MonoBehaviour
 
     public void GenerateWorld() {
         worldBlock = Resources.LoadAll<GameObject>("WorldBlocks");
-        start = Resources.LoadAll<GameObject>("Start");
         done = false;
         spawn = 55.5f;
         exits = 0;
@@ -35,7 +34,7 @@ public class WorldManager : MonoBehaviour
             } else {
                 world.Add(rand);
             } 
-            Debug.Log(rand);
+            //Debug.Log(rand);
         }
     }
 }
