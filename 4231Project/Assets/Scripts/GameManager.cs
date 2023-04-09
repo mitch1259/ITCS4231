@@ -28,12 +28,24 @@ public class GameManager : MonoBehaviour
 
     void Update() {
         if (player.getDead() || player.getWin()) {
+
+            if (player.getWin()) {
+                player.score += 10;
+            }
+
             player.setDead(false);
             player.setWin(false);
             player.setPlay(false);
             UI.StartButton.gameObject.SetActive(true);
             UI.Difficulty.gameObject.SetActive(true);
-            score = player.score;
+            
+            if (player.score > score) {
+                score = player.score;
+
+                UI.score.SetText("High Score: " + score);
+            }
+
+            UI.score.gameObject.SetActive(true);
             Debug.Log("Score: " + score);
             InitGame();
         }
@@ -52,6 +64,7 @@ public class GameManager : MonoBehaviour
             UI.startGame = false;
             UI.StartButton.gameObject.SetActive(false);
             UI.Difficulty.gameObject.SetActive(false);
+            UI.score.gameObject.SetActive(false);
         }
     }
 }

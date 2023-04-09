@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using TMPro;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ButtonManager : MonoBehaviour
     public Slider Difficulty;
     public Image handle;
     public Image fill;
+    public TMP_Text score;
     public bool startGame;
     public int diff;
 
@@ -21,6 +23,7 @@ public class ButtonManager : MonoBehaviour
         startGame = false;
         Difficulty.onValueChanged.AddListener(difficultyUpdate);
         diff = 0;
+        score.gameObject.SetActive(false);
     }
 
     void startGameFunc() {
