@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             player.setPlay(false);
             UI.StartButton.gameObject.SetActive(true);
             UI.Difficulty.gameObject.SetActive(true);
+            UI.ExitButton.gameObject.SetActive(true);
             
             if (player.score > score) {
                 score = player.score;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
             UI.StartButton.gameObject.SetActive(false);
             UI.Difficulty.gameObject.SetActive(false);
             UI.score.gameObject.SetActive(false);
+            UI.ExitButton.gameObject.SetActive(false);
         }
     }
 }

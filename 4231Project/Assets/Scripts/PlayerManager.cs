@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public Transform playerTransform;
+    public Rigidbody playerBody;
     public Transform cameraTransform;
     public WorldManager instance;
     public GameManager gameManager;
@@ -115,6 +116,8 @@ public class PlayerManager : MonoBehaviour
         if (playerTransform.position.y < ground - 0.5f) {
             dead = true;
         }
+
+        playerBody.velocity = new Vector3(0f, 0f, 0f);
     }
     }
 
@@ -162,6 +165,9 @@ public class PlayerManager : MonoBehaviour
             instance.block++;
             //Debug.Log(spawns[spawns.Count - 1].name);
             Destroy(spawns[spawns.Count - 3]);
+        } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Coin (Instance)") {
+            score += 1;
+            Destroy(c.gameObject);
         }
     }
 

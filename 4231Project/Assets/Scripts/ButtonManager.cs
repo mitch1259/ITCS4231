@@ -13,6 +13,7 @@ public class ButtonManager : MonoBehaviour
     public Image handle;
     public Image fill;
     public TMP_Text score;
+    public Button ExitButton;
     public bool startGame;
     public int diff;
 
@@ -20,10 +21,15 @@ public class ButtonManager : MonoBehaviour
     void Start()
     {
         StartButton.onClick.AddListener(startGameFunc);
+        ExitButton.onClick.AddListener(exitGameFunc);
         startGame = false;
         Difficulty.onValueChanged.AddListener(difficultyUpdate);
         diff = 0;
         score.gameObject.SetActive(false);
+    }
+
+    void exitGameFunc() {
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     void startGameFunc() {
