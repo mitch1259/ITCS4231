@@ -97,8 +97,8 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (jumping) {
-            gravity -= fall * Time.deltaTime;
-            playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime * 2.5f, 0f);
+            gravity -= fall * Time.deltaTime * 1.5f;
+            playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime * 1.55f, 0f);
 
             if (safe) {
                 jumping = false;
