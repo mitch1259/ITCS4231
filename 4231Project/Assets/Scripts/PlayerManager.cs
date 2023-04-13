@@ -94,17 +94,37 @@ public class PlayerManager : MonoBehaviour
             gravity = -0.01f;
             jumping = true;
             safe = false;
+
+            //Code below is from office hours when we couldnt figure out framerate issues
+            //playerTransform.position += Vector3.up * 0.5f;
+            //playerBody.useGravity = true;
+            //playerBody.velocity = new Vector3(0f, jump, 0f);
         }
 
         if (jumping) {
+            //fall = 0.00035f;
+            //jump = .25f;
+
+
             gravity -= fall * Time.deltaTime * 1.5f;
             playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime * 1.55f, 0f);
+            //playerTransform.position += new Vector3(0f, gravity + jump * 1.55f, 0f)
+
+            //print(fall);
+            //print(Time.deltaTime);
+            //print(gravity);
+            //print(jump);
+            //print("");
 
             if (safe) {
                 jumping = false;
                 playerTransform.position = new Vector3(playerTransform.position.x, ground, playerTransform.position.z);
-            }
+                //playerBody.useGravity = false;
+            } //else {
+                //playerBody.velocity += Vector3.down * 0.15f;
+            //}
         }
+
 
         //Debug.Log(Time.deltaTime);
 
