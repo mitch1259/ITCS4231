@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public PlayerManager player;
     public ButtonManager UI;
     public GameObject[] start;
+    public Animator animator;
     public int difficulty;
     public int oldDifficulty;
     public int score;
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
             UI.StartButton.gameObject.SetActive(true);
             UI.Difficulty.gameObject.SetActive(true);
             UI.ExitButton.gameObject.SetActive(true);
+            animator.SetBool("jumping", false);
+            animator.SetBool("playing", false);
             
             if (player.score > score) {
                 score = player.score;
@@ -67,6 +70,7 @@ public class GameManager : MonoBehaviour
             UI.Difficulty.gameObject.SetActive(false);
             UI.score.gameObject.SetActive(false);
             UI.ExitButton.gameObject.SetActive(false);
+            animator.SetBool("playing", true);
         }
     }
 }

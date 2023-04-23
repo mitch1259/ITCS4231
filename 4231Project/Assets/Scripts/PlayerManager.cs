@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public WorldManager instance;
     public GameManager gameManager;
     public List<GameObject> spawns;
+    public Animator animator;
     private float speed;
     private float speedIncrease;
     private float ground;
@@ -24,12 +25,14 @@ public class PlayerManager : MonoBehaviour
     private bool win;
     private bool playing;
     public int score;
+    private float rotationSpeed;
 
     public void Init() {
         spawns.Add(Instantiate(gameManager.start[1], new Vector3(0, 0, 0), Quaternion.identity));
         spawns.Add(Instantiate(gameManager.start[0], new Vector3(0, 0, 19.5f), Quaternion.identity));
 
-        playerTransform.position = new Vector3(0f, ground + 0.5f, 0f);
+        playerTransform.position = new Vector3(0f, ground, 0f);
+        playerTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
         cameraTransform.rotation = Quaternion.Euler(15f, 0f, 0f);
         Debug.Log("Player reInit");
@@ -38,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     public void ResetPlayer() {
         speed = 5f;
         speedIncrease = 0.05f;
-        ground = 1.25f;
+        ground = 0.25f;
         jump = 10f;
         fall = .035f;
         gravity = -0.01f;
@@ -49,6 +52,7 @@ public class PlayerManager : MonoBehaviour
         falling = true;
         win = false;
         score = 0;
+        rotationSpeed = 5f;
 
         foreach(var spawn in spawns) {
             Destroy(spawn);
@@ -80,6 +84,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
     if (playing) {
+        
         Vector3 movement = Vector3.zero;
         float x = playerTransform.position.x;
         x = Mathf.Clamp(x, -3.25f, 3.25f);
@@ -94,6 +99,7 @@ public class PlayerManager : MonoBehaviour
             gravity = -0.01f;
             jumping = true;
             safe = false;
+            animator.SetBool("jumping", true);
 
             //Code below is from office hours when we couldnt figure out framerate issues
             //playerTransform.position += Vector3.up * 0.5f;
@@ -119,6 +125,7 @@ public class PlayerManager : MonoBehaviour
             if (safe) {
                 jumping = false;
                 playerTransform.position = new Vector3(playerTransform.position.x, ground, playerTransform.position.z);
+                animator.SetBool("jumping", false);
                 //playerBody.useGravity = false;
             } //else {
                 //playerBody.velocity += Vector3.down * 0.15f;
@@ -138,12 +145,26 @@ public class PlayerManager : MonoBehaviour
         }
 
         playerBody.velocity = new Vector3(0f, 0f, 0f);
+
+        
+        //TurnPlayer();
+        }
     }
+
+    void TurnPlayer() {
+        float h = Input.GetAxis("Horizontal");
+
+        Vector3 inputDirection = new Vector3(h, 0f, 0f) + playerTransform.position;
+        Vector3 toFaceDirection = inputDirection - playerTransform.position;
+
+        Quaternion targetRotation = Quaternion.LookRotation(toFaceDirection);
+        playerTransform.rotation = Quaternion.Lerp(playerTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     void FixedUpdate()
     {
     if (playing) {
+        
         playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
         cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);
         cameraTransform.rotation = Quaternion.Euler(15f, 0f, 0f);
@@ -155,6 +176,7 @@ public class PlayerManager : MonoBehaviour
             score += 5;
             Debug.Log("Speed Increased");
         }
+        
     }
     }
 
