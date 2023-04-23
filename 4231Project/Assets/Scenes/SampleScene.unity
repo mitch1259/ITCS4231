@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'High Score: '
+  m_text: 'Score: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1791,7 +1791,8 @@ MonoBehaviour:
   animator: {fileID: 2145515834}
   difficulty: 0
   oldDifficulty: 0
-  score: 0
+  highScore: 0
+  currScore: 0
 --- !u!4 &1760702081
 Transform:
   m_ObjectHideFlags: 0
@@ -1917,6 +1918,9 @@ MonoBehaviour:
   gameManager: {fileID: 1760702080}
   spawns: []
   animator: {fileID: 2145515834}
+  dead: 0
+  win: 0
+  playing: 0
   score: 0
 --- !u!54 &2145515837
 Rigidbody:

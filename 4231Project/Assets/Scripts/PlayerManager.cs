@@ -20,10 +20,10 @@ public class PlayerManager : MonoBehaviour
     private bool jumping;
     private int passedTime;
     private bool safe;
-    private bool dead;
+    public bool dead;
     private bool falling;
-    private bool win;
-    private bool playing;
+    public bool win;
+    public bool playing;
     public int score;
     private float rotationSpeed;
 
@@ -61,41 +61,25 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Player reset");
     }
 
-    public bool getWin() {
-        return win;
-    }
-
-    public void setWin(bool value) {
-        win = value;
-    }
-
-    public void setDead(bool value) {
-        dead = value;
-    }
-
-    public bool getDead() {
-        return dead;
-    }
-
-    public void setPlay(bool value) {
-        playing = value;
-    }
-
     void Update()
     {
     if (playing) {
+
+        if (Input.GetKey(KeyCode.Escape)) {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
         
         Vector3 movement = Vector3.zero;
         float x = playerTransform.position.x;
         x = Mathf.Clamp(x, -3.25f, 3.25f);
 
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             playerTransform.position = new Vector3(x - (speed * Time.deltaTime), playerTransform.position.y, playerTransform.position.z);
-        } else if (Input.GetKey(KeyCode.D)) {
+        } else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             playerTransform.position = new Vector3(x + (speed * Time.deltaTime), playerTransform.position.y, playerTransform.position.z);
         }
 
-        if (Input.GetKey(KeyCode.W) && jumping == false) {
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && jumping == false) {
             gravity = -0.01f;
             jumping = true;
             safe = false;
@@ -147,7 +131,7 @@ public class PlayerManager : MonoBehaviour
         playerBody.velocity = new Vector3(0f, 0f, 0f);
 
         
-        //TurnPlayer();
+        TurnPlayer();
         }
     }
 
@@ -159,6 +143,7 @@ public class PlayerManager : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(toFaceDirection);
         playerTransform.rotation = Quaternion.Lerp(playerTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        playerTransform.rotation = new Quaternion(0f, Mathf.Clamp(playerTransform.rotation.y, -35f, 35f), 0f, 1f);
     }
 
     void FixedUpdate()
@@ -190,6 +175,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Hit an obstacle");
             dead = true;
         } else if (c.gameObject.GetComponent<MeshRenderer>().material.name == "Breakout (Instance)") {
+            dead = true;
             win = true;
             Debug.Log("Player wins!");
         }

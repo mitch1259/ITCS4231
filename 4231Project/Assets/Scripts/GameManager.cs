@@ -11,13 +11,15 @@ public class GameManager : MonoBehaviour
     public Animator animator;
     public int difficulty;
     public int oldDifficulty;
-    public int score;
+    public int highScore;
+    public int currScore;
 
     void Awake() {
         start = Resources.LoadAll<GameObject>("Start");
         difficulty = 0;
         oldDifficulty = -1;
-        score = -1;
+        highScore = -1;
+        currScore = 0;
 
         InitGame();
     }
@@ -28,29 +30,29 @@ public class GameManager : MonoBehaviour
     }
 
     void Update() {
-        if (player.getDead() || player.getWin()) {
+        if (player.dead) {
 
-            if (player.getWin()) {
+            if (player.win) {
                 player.score += 10;
             }
 
-            player.setDead(false);
-            player.setWin(false);
-            player.setPlay(false);
+            player.dead = false;
+            player.win = false;
+            player.playing = false;
             UI.StartButton.gameObject.SetActive(true);
             UI.Difficulty.gameObject.SetActive(true);
             UI.ExitButton.gameObject.SetActive(true);
             animator.SetBool("jumping", false);
             animator.SetBool("playing", false);
+            currScore = 0;
             
-            if (player.score > score) {
-                score = player.score;
+            if (player.score > highScore) {
+                highScore = player.score;
 
-                UI.score.SetText("High Score: " + score);
+                UI.score.SetText("High Score: " + highScore);
             }
 
-            UI.score.gameObject.SetActive(true);
-            Debug.Log("Score: " + score);
+            Debug.Log("Score: " + highScore);
             InitGame();
         }
 
@@ -62,15 +64,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("Difficulty Updated: " + world.threshold);
         }
 
-        if (UI.startGame == true) {
+        if (UI.startGame) {
             world.GenerateWorld();
-            player.setPlay(true);
+            player.playing = true;
             UI.startGame = false;
             UI.StartButton.gameObject.SetActive(false);
             UI.Difficulty.gameObject.SetActive(false);
-            UI.score.gameObject.SetActive(false);
+            UI.score.gameObject.SetActive(true);
             UI.ExitButton.gameObject.SetActive(false);
             animator.SetBool("playing", true);
+            UI.score.SetText("Score: " + currScore);
+        }
+
+        if (player.score > currScore) {
+            currScore = player.score;
+            UI.score.SetText("Score: " + currScore);
         }
     }
 }
