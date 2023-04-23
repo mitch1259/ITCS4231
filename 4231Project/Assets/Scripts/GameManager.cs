@@ -48,10 +48,9 @@ public class GameManager : MonoBehaviour
             
             if (player.score > highScore) {
                 highScore = player.score;
-
-                UI.score.SetText("High Score: " + highScore);
             }
 
+            UI.score.SetText("High Score: " + highScore);
             Debug.Log("Score: " + highScore);
             InitGame();
         }
