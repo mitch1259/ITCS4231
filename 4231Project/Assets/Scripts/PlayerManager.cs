@@ -53,6 +53,7 @@ public class PlayerManager : MonoBehaviour
         win = false;
         score = 0;
         rotationSpeed = 5f;
+        animator.speed = 1;
 
         foreach(var spawn in spawns) {
             Destroy(spawn);
@@ -64,10 +65,6 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
     if (playing) {
-
-        if (Input.GetKey(KeyCode.Escape)) {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
         
         Vector3 movement = Vector3.zero;
         float x = playerTransform.position.x;
@@ -157,6 +154,7 @@ public class PlayerManager : MonoBehaviour
         passedTime += 1;
         if (passedTime >= 600) {
             passedTime = 0;
+            animator.speed += speedIncrease;
             speedIncrease += 0.001f;
             score += 5;
             Debug.Log("Speed Increased");

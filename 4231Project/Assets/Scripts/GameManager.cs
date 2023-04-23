@@ -79,5 +79,9 @@ public class GameManager : MonoBehaviour
             currScore = player.score;
             UI.score.SetText("Score: " + currScore);
         }
+
+        if (Input.GetKey(KeyCode.Escape)) {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
     }
 }
