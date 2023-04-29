@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
             UI.StartButton.gameObject.SetActive(true);
             UI.Difficulty.gameObject.SetActive(true);
             UI.ExitButton.gameObject.SetActive(true);
+            UI.Instruct.gameObject.SetActive(true);
             animator.SetBool("jumping", false);
             animator.SetBool("playing", false);
             currScore = 0;
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
             UI.Difficulty.gameObject.SetActive(false);
             UI.score.gameObject.SetActive(true);
             UI.ExitButton.gameObject.SetActive(false);
+            UI.Instruct.gameObject.SetActive(false);
             animator.SetBool("playing", true);
             UI.score.SetText("Score: " + currScore);
         }
