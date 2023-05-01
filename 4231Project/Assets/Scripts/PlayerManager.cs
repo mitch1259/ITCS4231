@@ -94,7 +94,7 @@ public class PlayerManager : MonoBehaviour
 
 
             gravity -= fall * Time.deltaTime * 1.5f;
-            playerTransform.position += new Vector3(0f, gravity + jump * Time.deltaTime * 1.55f, 0f);
+            playerTransform.position += new Vector3(0f, gravity + jump * 0.002f * 1.55f, 0f);
             //playerTransform.position += new Vector3(0f, gravity + jump * 1.55f, 0f)
 
             //print(fall);

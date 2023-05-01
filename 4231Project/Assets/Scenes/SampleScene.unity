@@ -1435,6 +1435,7 @@ MonoBehaviour:
   Rules: {fileID: 1941142905}
   cameraTransform: {fileID: 963194228}
   BackToGame: {fileID: 1955138652}
+  CanvasSize: {fileID: 1251570958}
   startGame: 0
   teach: 0
   diff: 0
