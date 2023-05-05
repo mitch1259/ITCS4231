@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public ButtonManager UI;
     public GameObject[] start;
     public Animator animator;
-    public int difficulty;
     public int oldDifficulty;
     public int highScore;
     public int currScore;
@@ -18,7 +17,6 @@ public class GameManager : MonoBehaviour
 
     void Awake() {
         start = Resources.LoadAll<GameObject>("Start");
-        difficulty = 0;
         oldDifficulty = -1;
         highScore = -1;
         currScore = 0;
@@ -59,10 +57,9 @@ public class GameManager : MonoBehaviour
             InitGame();
         }
 
-        difficulty = UI.diff;
-        if (difficulty != oldDifficulty) {
-            world.threshold = difficulty*4;
-            oldDifficulty = difficulty;
+        if (UI.diff != oldDifficulty) {
+            world.threshold = UI.diff*4;
+            oldDifficulty = UI.diff;
 
             Debug.Log("Difficulty Updated: " + world.threshold);
         }
