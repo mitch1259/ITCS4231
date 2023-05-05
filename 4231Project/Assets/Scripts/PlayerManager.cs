@@ -24,7 +24,9 @@ public class PlayerManager : MonoBehaviour
     private bool falling;
     public bool win;
     public bool playing;
+    public bool paused;
     public int score;
+    public float animSpeed;
     private float rotationSpeed;
 
     public void Init() {
@@ -54,6 +56,7 @@ public class PlayerManager : MonoBehaviour
         score = 0;
         rotationSpeed = 5f;
         animator.speed = 1;
+        paused = false;
 
         foreach(var spawn in spawns) {
             Destroy(spawn);
@@ -64,7 +67,8 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-    if (playing) {
+
+    if (playing && !paused) {
         
         Vector3 movement = Vector3.zero;
         float x = playerTransform.position.x;
@@ -129,6 +133,17 @@ public class PlayerManager : MonoBehaviour
 
         
         TurnPlayer();
+
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            paused = !paused;
+            animSpeed = animator.speed;
+            animator.speed = 0;
+        }
+        }
+
+        if (Input.GetKey(KeyCode.Space) && playing && paused) {
+            paused = !paused;
+            animator.speed = animSpeed;
         }
     }
 
@@ -145,7 +160,7 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
-    if (playing) {
+    if (playing && !paused) {
         
         playerTransform.position += new Vector3(0f, 0f, speed * speedIncrease);
         cameraTransform.position = new Vector3(0f, 5f, playerTransform.position.z - 7f);

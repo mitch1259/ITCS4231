@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int oldDifficulty;
     public int highScore;
     public int currScore;
+    public string scoreString;
+    public bool wasPaused;
 
     void Awake() {
         start = Resources.LoadAll<GameObject>("Start");
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
         oldDifficulty = -1;
         highScore = -1;
         currScore = 0;
+        wasPaused = false;
 
         InitGame();
     }
@@ -74,16 +77,24 @@ public class GameManager : MonoBehaviour
             UI.ExitButton.gameObject.SetActive(false);
             UI.Instruct.gameObject.SetActive(false);
             animator.SetBool("playing", true);
-            UI.score.SetText("Score: " + currScore);
+            scoreString = "Score: " + currScore;
+            UI.score.SetText(scoreString);
         }
 
         if (player.score > currScore) {
             currScore = player.score;
-            UI.score.SetText("Score: " + currScore);
+            scoreString = "Score: " + currScore;
+            UI.score.SetText(scoreString);
         }
 
-        if (Input.GetKey(KeyCode.Escape)) {
-            UnityEditor.EditorApplication.isPlaying = false;
+        if (player.paused) {
+            UI.score.SetText("PAUSED\n\n" + scoreString);
+            wasPaused = true;
+        }
+
+        if (!player.paused && wasPaused) {
+            wasPaused = false;
+            UI.score.SetText(scoreString);
         }
     }
 }
